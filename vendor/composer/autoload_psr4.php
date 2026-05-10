@@ -15,6 +15,8 @@ return array(
     'Masterminds\\' => array($vendorDir . '/masterminds/html5/src'),
     'FontLib\\' => array($vendorDir . '/dompdf/php-font-lib/src/FontLib'),
     'Dompdf\\' => array($vendorDir . '/dompdf/dompdf/src'),
+    'Config\\' => array($baseDir . '/config'),
     'Composer\\Pcre\\' => array($vendorDir . '/composer/pcre/src'),
     'Complex\\' => array($vendorDir . '/markbaker/complex/classes/src'),
+    'App\\' => array($baseDir . '/app'),
 );
