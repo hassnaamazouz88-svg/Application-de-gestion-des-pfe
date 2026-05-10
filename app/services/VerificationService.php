@@ -56,7 +56,7 @@ class VerificationService
 
         return $errors;
     }
-    
+
 public function checkRestTime($soutenances)
 {
     $errors = [];
@@ -83,6 +83,26 @@ public function checkRestTime($soutenances)
                         . $soutenances[$i]['professeur'];
                 }
             }
+        }
+    }
+
+    return $errors;
+}
+
+public function checkBalancedAssignments($affectations)
+{
+    $errors = [];
+
+    foreach ($affectations as $professeur => $nbEtudiants) {
+
+        if ($nbEtudiants < 3 || $nbEtudiants > 4) {
+
+            $errors[] =
+                "Répartition non équilibrée : "
+                . $professeur
+                . " possède "
+                . $nbEtudiants
+                . " étudiants";
         }
     }
 
