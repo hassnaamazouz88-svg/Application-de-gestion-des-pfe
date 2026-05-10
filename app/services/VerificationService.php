@@ -56,5 +56,36 @@ class VerificationService
 
         return $errors;
     }
+    
+public function checkRestTime($soutenances)
+{
+    $errors = [];
 
+    for ($i = 0; $i < count($soutenances); $i++) {
+
+        for ($j = $i + 1; $j < count($soutenances); $j++) {
+
+            if (
+                $soutenances[$i]['date'] == $soutenances[$j]['date']
+                &&
+                $soutenances[$i]['professeur'] == $soutenances[$j]['professeur']
+            ) {
+
+                $heure1 = strtotime($soutenances[$i]['heure']);
+                $heure2 = strtotime($soutenances[$j]['heure']);
+
+                $difference = abs($heure2 - $heure1) / 3600;
+
+                if ($difference < 2) {
+
+                    $errors[] =
+                        "Temps de repos insuffisant pour "
+                        . $soutenances[$i]['professeur'];
+                }
+            }
+        }
+    }
+
+    return $errors;
+}
 }
