@@ -5,45 +5,49 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vérification</title>
 
-    <title>Vérification des contraintes</title>
-
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
 </head>
 
 <body class="bg-light">
 
-    <div class="container mt-5">
+<div class="container py-5">
 
-        <h1 class="text-center mb-5">
-            Vérification des contraintes
-        </h1>
+    <h1 class="text-center mb-5">
+        Vérification des contraintes
+    </h1>
 
-        <!-- CARD STATISTIQUES -->
+    <?php
 
-        <div class="row mb-4">
+    // MOCK DATA
 
-            <div class="col-md-4">
+    $errors = [
 
-                <div class="card shadow-sm">
+        "Conflit salle A1 à 09h00",
+        "Prof Ahmed affecté à deux soutenances simultanées",
+        "Repos insuffisant pour Prof Sara"
 
-                    <div class="card-body text-center">
+    ];
 
-                        <h5>
-                            Nombre anomalies
-                        </h5>
+    ?>
 
-                        <h2 class="text-danger">
+    <div class="row mb-4">
 
-                            <?= count($errors) ?>
+        <div class="col-md-4">
 
-                        </h2>
+            <div class="card shadow border-0">
 
-                    </div>
+                <div class="card-body text-center">
+
+                    <h5>Nombre anomalies</h5>
+
+                    <h1 class="text-danger">
+
+                        <?= count($errors) ?>
+
+                    </h1>
 
                 </div>
 
@@ -51,74 +55,66 @@
 
         </div>
 
-        <!-- ALERT SI AUCUNE ERREUR -->
-
-        <?php if (empty($errors)) : ?>
-
-            <div class="alert alert-success">
-
-                Aucune anomalie détectée.
-
-            </div>
-
-        <?php else : ?>
-
-            <!-- TABLEAU DES ERREURS -->
-
-            <div class="card shadow-sm">
-
-                <div class="card-header bg-danger text-white">
-
-                    Liste des anomalies détectées
-
-                </div>
-
-                <div class="card-body">
-
-                    <table class="table table-bordered">
-
-                        <thead>
-
-                            <tr>
-
-                                <th>#</th>
-
-                                <th>Anomalie</th>
-
-                            </tr>
-
-                        </thead>
-
-                        <tbody>
-
-                            <?php foreach ($errors as $index => $error) : ?>
-
-                                <tr>
-
-                                    <td>
-                                        <?= $index + 1 ?>
-                                    </td>
-
-                                    <td>
-                                        <?= $error ?>
-                                    </td>
-
-                                </tr>
-
-                            <?php endforeach; ?>
-
-                        </tbody>
-
-                    </table>
-
-                </div>
-
-            </div>
-
-        <?php endif; ?>
-
     </div>
 
-</body>
+    <?php if(empty($errors)): ?>
 
+        <div class="alert alert-success">
+
+            Aucune anomalie détectée.
+
+        </div>
+
+    <?php else: ?>
+
+        <div class="card shadow border-0">
+
+            <div class="card-header bg-danger text-white">
+
+                Liste des anomalies
+
+            </div>
+
+            <div class="card-body">
+
+                <table class="table table-bordered">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>#</th>
+                            <th>Description</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    <?php foreach($errors as $index => $error): ?>
+
+                        <tr>
+
+                            <td><?= $index + 1 ?></td>
+
+                            <td><?= $error ?></td>
+
+                        </tr>
+
+                    <?php endforeach; ?>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    <?php endif; ?>
+
+</div>
+
+</body>
 </html>

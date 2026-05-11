@@ -2,94 +2,160 @@
 <html lang="fr">
 
 <head>
+
     <meta charset="UTF-8">
     <title>Dashboard PFE</title>
 
+    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 
 <body class="bg-light">
 
-<div class="container mt-5">
+<div class="container py-5">
 
-    <h1 class="mb-4 text-center">Dashboard - Gestion des PFE</h1>
+    <h1 class="text-center mb-5">
+        Dashboard - Gestion des PFE
+    </h1>
 
     <?php
-        // DONNÉES MOCK (plus tard viendront de la DB)
-        $nbEtudiants = 120;
-        $nbProfs = 22;
-        $nbSoutenances = 60;
 
-        $repartition = [
-            "Informatique" => 70,
-            "Mathématique" => 30,
-            "Langue" => 20
-        ];
+    // DONNÉES MOCK
+
+    $nbEtudiants = 120;
+    $nbProfs = 22;
+    $nbSoutenances = 77;
+
+    $repartition = [
+        "GI" => 40,
+        "ID" => 39,
+        "TDAI" => 26,
+        "Mathématique" => 15
+    ];
+
     ?>
 
-    <!-- STATISTIQUES -->
-    <div class="row">
+    <!-- CARDS -->
+
+    <div class="row g-4">
 
         <div class="col-md-4">
-            <div class="card shadow-sm text-center">
-                <div class="card-body">
+
+            <div class="card shadow border-0">
+
+                <div class="card-body text-center">
+
                     <h5>Étudiants</h5>
-                    <h2 class="text-primary"><?= $nbEtudiants ?></h2>
+
+                    <h1 class="text-primary">
+                        <?= $nbEtudiants ?>
+                    </h1>
+
                 </div>
+
             </div>
+
         </div>
 
         <div class="col-md-4">
-            <div class="card shadow-sm text-center">
-                <div class="card-body">
+
+            <div class="card shadow border-0">
+
+                <div class="card-body text-center">
+
                     <h5>Professeurs</h5>
-                    <h2 class="text-success"><?= $nbProfs ?></h2>
+
+                    <h1 class="text-success">
+                        <?= $nbProfs ?>
+                    </h1>
+
                 </div>
+
             </div>
+
         </div>
 
         <div class="col-md-4">
-            <div class="card shadow-sm text-center">
-                <div class="card-body">
+
+            <div class="card shadow border-0">
+
+                <div class="card-body text-center">
+
                     <h5>Soutenances</h5>
-                    <h2 class="text-danger"><?= $nbSoutenances ?></h2>
+
+                    <h1 class="text-danger">
+                        <?= $nbSoutenances ?>
+                    </h1>
+
                 </div>
+
             </div>
+
         </div>
 
     </div>
 
-    <!-- RÉPARTITION -->
-    <div class="mt-5">
+    <!-- GRAPHIQUE -->
 
-        <h3>Répartition par filière</h3>
+    <div class="card shadow border-0 mt-5">
 
-        <table class="table table-bordered mt-3">
-            <thead class="table-dark">
-                <tr>
-                    <th>Filière</th>
-                    <th>Nombre d'étudiants</th>
-                </tr>
-            </thead>
+        <div class="card-body">
 
-            <tbody>
+            <h4 class="mb-4">
+                Répartition des étudiants par filière
+            </h4>
 
-            <?php foreach ($repartition as $filiere => $nombre): ?>
+            <canvas id="myChart"></canvas>
 
-                <tr>
-                    <td><?= $filiere ?></td>
-                    <td><?= $nombre ?></td>
-                </tr>
-
-            <?php endforeach; ?>
-
-            </tbody>
-
-        </table>
+        </div>
 
     </div>
 
 </div>
+
+<script>
+
+const ctx = document.getElementById('myChart');
+
+new Chart(ctx, {
+
+    type: 'bar',
+
+    data: {
+
+        labels: <?= json_encode(array_keys($repartition)) ?>,
+
+        datasets: [{
+
+            label: 'Nombre d\'étudiants',
+
+            data: <?= json_encode(array_values($repartition)) ?>,
+
+            borderWidth: 1
+
+        }]
+    },
+
+    options: {
+
+        responsive: true,
+
+        scales: {
+
+            y: {
+
+                beginAtZero: true
+
+            }
+        }
+    }
+});
+
+</script>
 
 </body>
 </html>
