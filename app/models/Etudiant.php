@@ -5,33 +5,22 @@ use PDO;
 
 class Etudiant extends Model
 {
-    /**
-     * Crée un nouvel étudiant dans la base de données
-     */
     public static function create(array $data): bool
     {
         $db = self::getDB();
-        $sql = "INSERT INTO etudiant (nom, prenom, email, filiere, sujet_pfe, langue_pfe) 
-                VALUES (:nom, :prenom, :email, :filiere, :sujet_pfe, :langue_pfe)";
+        $sql = "INSERT INTO Etudiant (nom, prenom, email, filiere, sujet_pfe, langue_pfe, id_prof) 
+                VALUES (:nom, :prenom, :email, :filiere, :sujet_pfe, :langue_pfe, :id_prof)";
         
         $stmt = $db->prepare($sql);
         return $stmt->execute([
             ':nom'        => $data['nom'],
             ':prenom'     => $data['prenom'],
             ':email'      => $data['email'],
-            ':filiere'    => $data['filiere'],
-            ':sujet_pfe'  => $data['sujet_pfe'],
-            ':langue_pfe' => $data['langue_pfe']
+            ':filiere'    => $data['filiere'] ?? null,
+            ':sujet_pfe'  => $data['sujet_pfe'] ?? null,
+            ':langue_pfe' => $data['langue_pfe'] ?? null,
+            ':id_prof'    => $data['id_prof'] ?? null // L'encadrant optionnel au départ
         ]);
-    }
-
-    /**
-     * Récupère tous les étudiants
-     */
-    public static function getAll(): array
-    {
-        $db = self::getDB();
-        return $db->query("SELECT * FROM etudiant ORDER BY nom ASC")->fetchAll(PDO::FETCH_ASSOC);
     }
 }
 

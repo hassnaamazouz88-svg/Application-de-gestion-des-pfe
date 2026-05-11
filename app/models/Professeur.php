@@ -1,30 +1,20 @@
 <?php
 namespace App\Models;
 
-use PDO;
-
 class Professeur extends Model
 {
     public static function create(array $data): bool
     {
         $db = self::getDB();
-        $sql = "INSERT INTO professeur (nom, prenom, email, specialite) 
-                VALUES (:nom, :prenom, :email, :specialite)";
+        $sql = "INSERT INTO Professeur (nom, prenom, specialite) 
+                VALUES (:nom, :prenom, :specialite)";
         
         $stmt = $db->prepare($sql);
         return $stmt->execute([
-            ':nom'         => $data['nom'],
-            ':prenom'      => $data['prenom'],
-            ':email'       => $data['email'],
-            ':specialite' => $data['specialite']
+            ':nom'        => $data['nom'],
+            ':prenom'     => $data['prenom'],
+            ':specialite' => $data['specialite'] ?? null
         ]);
     }
-
-    public static function getAll(): array
-    {
-        $db = self::getDB();
-        return $db->query("SELECT * FROM professeur ORDER BY nom ASC")->fetchAll(PDO::FETCH_ASSOC);
-    }
 }
-
 ?>

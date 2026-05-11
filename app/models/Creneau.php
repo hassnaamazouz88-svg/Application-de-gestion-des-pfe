@@ -5,22 +5,31 @@ use PDO;
 
 class Creneau extends Model
 {
-    public static function create($date_heure): bool
+    public static function create(array $data): bool
     {
         $db = self::getDB();
-        $sql = "INSERT INTO creneau (date_heure, disponible) VALUES (?, 1)";
+        $sql = "INSERT INTO Creneau (date_cren, heure_debut, heure_fin, id_session) 
+                VALUES (:date_cren, :h_debut, :h_fin, :id_session)";
+        
         $stmt = $db->prepare($sql);
-        return $stmt->execute([$date_heure]);
+        return $stmt->execute([
+            ':date_cren'  => $data['date_cren'],
+            ':h_debut'    => $data['heure_debut'],
+            ':h_fin'      => $data['heure_fin'],
+            ':id_session' => $data['id_session']
+        ]);
     }
 
-    /**
-     * Récupère uniquement les créneaux libres pour la planification
-     */
     public static function getAvailable(): array
     {
         $db = self::getDB();
-        return $db->query("SELECT * FROM creneau WHERE disponible = 1 ORDER BY date_heure ASC")
-                  ->fetchAll(PDO::FETCH_ASSOC);
+        // Un créneau est disponible s'il n'est pas déjà dans la table Soutenance
+        $sql = "SELECT c.* FROM Creneau c 
+                LEFT JOIN Soutenance s ON c.id_cren = s.id_cren 
+                WHERE s.id_cren IS NULL 
+                ORDER BY c.date_cren, c.heure_debut ASC";
+        
+        return $db->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     }
 }
 
