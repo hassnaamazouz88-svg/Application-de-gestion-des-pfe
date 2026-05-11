@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__ . '/../views/verification.view.php';
+require_once __DIR__ . '/../services/VerificationService.php';
 
 class VerificationController
 {
@@ -35,6 +35,6 @@ class VerificationController
 
         $errors = array_merge($errorsSalle, $errorsProf);
 
-        require __DIR__ . '/../../views/verification.view.php';
+        require __DIR__ . '/../views/verification.view.php';
     }
 }
