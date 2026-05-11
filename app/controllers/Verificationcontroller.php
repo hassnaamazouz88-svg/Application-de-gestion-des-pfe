@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../services/VerificationService.php';
+require __DIR__ . '/../views/verification.view.php';
 
 class VerificationController
 {
