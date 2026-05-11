@@ -8,8 +8,8 @@ class Professeur extends Model
     public static function create(array $data): bool
     {
         $db = self::getDB();
-        $sql = "INSERT INTO professeur (nom, prenom, email, departement) 
-                VALUES (:nom, :prenom, :email, :departement)";
+        $sql = "INSERT INTO professeur (nom, prenom, email, specialite) 
+                VALUES (:nom, :prenom, :email, :specialite)";
         
         $stmt = $db->prepare($sql);
         return $stmt->execute([
