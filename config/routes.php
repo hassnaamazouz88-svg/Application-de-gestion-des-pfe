@@ -1,8 +1,8 @@
 <?php
-use App\Controllers\AffectationnCtrl;
+use App\Controllers\AffectationCtrl;
 
 $router->get('/affecter', function() {
-    $ctrl = new AffectationnCtrl();
+    $ctrl = new AffectationCtrl();
     $ctrl->lancer();
 })
 ?>
