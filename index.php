@@ -2,6 +2,10 @@
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-echo "Projet Gestion PFE";
+use App\Controllers\AffectationCtrl;
+
+$ctrl = new AffectationCtrl();
+
+$ctrl->lancer();
 
 ?>
